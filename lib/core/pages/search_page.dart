@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:movie_app/core/pages/detail_page.dart';
 import 'package:movie_app/core/pages/home_page.dart';
 
 class SearchPage extends StatefulWidget {
@@ -53,7 +54,8 @@ class _SearchPageState extends State<SearchPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                TextField(
+                Text(
+                  "Search film",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 16,
@@ -68,34 +70,121 @@ class _SearchPageState extends State<SearchPage> {
             child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: ((context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Image.asset("images/sample_movie_7.png"),
-                        ),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              "Spiderman",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 65, 65, 65)),
+                  return GestureDetector(
+                    onTap: (() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => DetailMovie())));
+                    }),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12),
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Image.asset(
+                              "images/sample_movie_7.png",
+                              height: 120,
                             ),
-                            Row(
-                              children: <Widget>[Icon(Icons.person)],
-                            )
-                          ],
-                        )
-                      ],
+                          ),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 2),
+                            height: 120,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Spiderman",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(255, 65, 65, 65)),
+                                ),
+                                SizedBox(width: 0.0, height: 12),
+                                Row(
+                                  children: const <Widget>[
+                                    ImageIcon(
+                                        Svg(
+                                          "images/star_icon.svg",
+                                        ),
+                                        size: 20,
+                                        color: Color(0xFFFF8700)),
+                                    SizedBox(width: 8, height: 0.0),
+                                    Text(
+                                      "9.5",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFFFF8700)),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: const <Widget>[
+                                    ImageIcon(
+                                      Svg("images/genre_icon.svg"),
+                                      color: Colors.grey,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 8, height: 0.0),
+                                    Text(
+                                      "Action",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: const <Widget>[
+                                    ImageIcon(
+                                      Svg("images/duration_icon.svg"),
+                                      color: Colors.grey,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 8, height: 0.0),
+                                    Text(
+                                      "2019",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: const <Widget>[
+                                    ImageIcon(
+                                      Svg("images/duration_movie.svg"),
+                                      color: Colors.grey,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 8, height: 0.0),
+                                    Text(
+                                      "139 minutes",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 })),
