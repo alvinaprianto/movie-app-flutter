@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mova',
+      debugShowCheckedModeBanner: false,
       theme: theme,
       home: const SplashScreen(),
     );

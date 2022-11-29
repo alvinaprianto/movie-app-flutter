@@ -9,6 +9,24 @@ class DetailMovie extends StatefulWidget {
 }
 
 class _DetailMovieState extends State<DetailMovie> {
+  final Map<String, String> _actors = {
+    "images/tom_holland.png": "Tom Holland",
+    "images/zendaya.png": "Zendaya",
+    "images/benedict.png": "Benedict Cumberbatch",
+    "images/jacob_batallon.png": "Jacob Batallon"
+  };
+
+  final Map<String, dynamic> _reviews = {
+    "Mr. Beast": [
+      "9.0",
+      "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences."
+    ],
+    "Michael": ["8.4", "It's the best movie all of the time!"],
+    "John": [
+      "7.4",
+      "Wow this is great! But i dont like the ending, so sad!",
+    ],
+  };
   Widget _tabSection(BuildContext context) {
     return DefaultTabController(
       length: 3,
@@ -16,36 +34,35 @@ class _DetailMovieState extends State<DetailMovie> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            child: TabBar(
+            child: const TabBar(
               indicatorWeight: 3,
               indicatorColor: Colors.black,
               tabs: [
-                Tab(text: "Tentang"),
-                Tab(text: "Ulasan"),
-                Tab(text: "Pemain"),
+                Tab(text: "About"),
+                Tab(text: "Review"),
+                Tab(text: "Actor"),
               ],
-              labelColor: Colors.black,
+              labelColor: Color.fromARGB(255, 32, 27, 27),
             ),
           ),
           Expanded(
-            // color: Colors.amber,
-            //Add this to give height
-            // height: MediaQuery.of(context).size.height,
             child: TabBarView(children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 14),
                 child: Text(
-                    "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences."),
+                  "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.",
+                  style: TextStyle(
+                    height: 1.4,
+                  ),
+                ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 14),
-                child: ListView.builder(
-                    itemCount: 3,
-                    itemBuilder: ((context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 16),
-                        child: Row(
+              ListView(
+                children: _reviews.entries.map((e) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+                    child: Column(
+                      children: [
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -53,7 +70,7 @@ class _DetailMovieState extends State<DetailMovie> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(90),
-                                  child: CircleAvatar(
+                                  child: const CircleAvatar(
                                     radius: 30,
                                     backgroundColor: Colors.brown,
                                     child: Icon(
@@ -62,58 +79,70 @@ class _DetailMovieState extends State<DetailMovie> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 8,
                                 ),
                                 Text(
-                                  "6.3",
-                                  style: TextStyle(color: Colors.blue),
+                                  e.value[0],
+                                  style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold),
                                 )
                               ],
                             ),
-                            SizedBox(width: 12, height: 0.0),
+                            const SizedBox(width: 12, height: 0.0),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Iqbal Ramadhan",
-                                    style: TextStyle(
+                                    e.key,
+                                    style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   Text(
-                                    "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.",
-                                    style: TextStyle(color: Colors.black),
+                                    e.value[1],
+                                    style: const TextStyle(color: Colors.black),
                                   )
                                 ],
                               ),
                             )
                           ],
                         ),
-                      );
-                    })),
+                        const Divider(
+                          thickness: 1,
+                          color: Color.fromARGB(255, 222, 222, 222),
+                        )
+                      ],
+                    ),
+                  );
+                }).toList(),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 14),
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    itemBuilder: ((context, index) {
-                      return Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            child: Image.asset("images/tom_holland.png"),
-                          ),
-                          Text("Tom Holland")
-                        ],
-                      );
-                    })),
+                padding: const EdgeInsets.only(top: 14),
+                child: GridView(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                    children: _actors.entries.map(
+                      (e) {
+                        return Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              child: Image.asset(e.key),
+                            ),
+                            const SizedBox(width: 0.0, height: 8),
+                            Text(e.value.toString())
+                          ],
+                        );
+                      },
+                    ).toList()),
               ),
             ]),
           ),
@@ -130,12 +159,10 @@ class _DetailMovieState extends State<DetailMovie> {
             leading: IconButton(
               icon: const Icon(
                 Icons.arrow_back_ios_outlined,
-                color: Colors.grey,
+                color: Colors.black,
               ),
               onPressed: (() {
                 Navigator.pop(context);
-                // Navigator.push(
-                // context, MaterialPageRoute(builder: (context) => HomePage()));
               }),
             ),
             backgroundColor: Colors.white,
@@ -153,7 +180,7 @@ class _DetailMovieState extends State<DetailMovie> {
         body: NestedScrollView(
             body: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
               child: _tabSection(context),
             ),
             headerSliverBuilder: ((context, innerBoxIsScrolled) {
@@ -162,37 +189,32 @@ class _DetailMovieState extends State<DetailMovie> {
                   child: Stack(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(bottom: 50),
+                        padding: const EdgeInsets.only(bottom: 60),
                         width: double.infinity,
                         child: Image.asset(
-                          "images/banner_spiderman.png",
+                          "images/banner_spiderman2.png",
                           fit: BoxFit.contain,
                         ),
                       ),
                       Positioned(
-                          left: 40,
+                          left: 34,
                           bottom: 0,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                    //   boxShadow: [
-                                    //   BoxShadow(
-                                    //       spreadRadius: 1,
-                                    //       blurRadius: 1,
-                                    //       color: Color.fromARGB(255, 187, 187, 187),
-                                    //       offset: Offset(0, 1))
-                                    // ],
                                     borderRadius: BorderRadius.circular(12)),
-                                child:
-                                    Image.asset("images/poster_spiderman.png"),
+                                child: Image.asset(
+                                  "images/poster_spiderman2.png",
+                                  height: 110,
+                                ),
                               ),
                               const SizedBox(width: 10, height: 0.0),
                               Container(
                                 width: MediaQuery.of(context).size.width - 180,
                                 child: const Text(
-                                  "Spiderman",
+                                  "Spiderman No Way Home",
                                   maxLines: 2,
                                   overflow: TextOverflow.clip,
                                   textAlign: TextAlign.left,
@@ -207,9 +229,9 @@ class _DetailMovieState extends State<DetailMovie> {
                     ],
                   ),
                 ),
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: SizedBox(
-                    height: 20,
+                    height: 24,
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -224,7 +246,7 @@ class _DetailMovieState extends State<DetailMovie> {
                             color: Colors.grey,
                             size: 20,
                           ),
-                          SizedBox(width: 8, height: 0.0),
+                          SizedBox(width: 4, height: 0.0),
                           Text(
                             "Action",
                             textAlign: TextAlign.center,
@@ -239,15 +261,14 @@ class _DetailMovieState extends State<DetailMovie> {
                               color: Colors.grey,
                             ),
                           ),
-                          SizedBox(width: 10, height: 0.0),
                           ImageIcon(
                             Svg("images/duration_icon.svg"),
                             color: Colors.grey,
                             size: 20,
                           ),
-                          SizedBox(width: 8, height: 0.0),
+                          SizedBox(width: 4, height: 0.0),
                           Text(
-                            "2019",
+                            "2021",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 13,
@@ -260,15 +281,14 @@ class _DetailMovieState extends State<DetailMovie> {
                               color: Colors.grey,
                             ),
                           ),
-                          SizedBox(width: 10, height: 0.0),
                           ImageIcon(
                             Svg("images/duration_movie.svg"),
                             color: Colors.grey,
                             size: 20,
                           ),
-                          SizedBox(width: 8, height: 0.0),
+                          SizedBox(width: 4, height: 0.0),
                           Text(
-                            "139 minutes",
+                            "148 minutes",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 13,
@@ -280,49 +300,32 @@ class _DetailMovieState extends State<DetailMovie> {
                     ),
                   ),
                 ),
-                // SliverToBoxAdapter(child: SizedBox(width: 0.0, height: 20)),
-
-                // Container(
-                //   width: 100,
-                //   height: 100,
-                //   child: DefaultTabController(
-                //     initialIndex: 1,
-                //     length: 3,
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         const TabBar(
-                //           tabs: <Widget>[
-                //             Tab(
-                //               text: "Text(data)",
-                //               icon: Icon(Icons.cloud_outlined),
-                //             ),
-                //             Tab(
-                //               icon: Icon(Icons.beach_access_sharp),
-                //             ),
-                //             Tab(
-                //               icon: Icon(Icons.brightness_5_sharp),
-                //             ),
-                //           ],
-                //         ),
-                //         const TabBarView(
-                //           children: <Widget>[
-                //             Center(
-                //               child: Text("It's cloudy here"),
-                //             ),
-                //             Center(
-                //               child: Text("It's rainy here"),
-                //             ),
-                //             Center(
-                //               child: Text("It's sunny here"),
-                //             ),
-                //           ],
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // )
               ];
             })));
+    // return Scaffold(
+    //   appBar: AppBar(
+    //       leadingWidth: 10,
+    //       leading: IconButton(
+    //         icon: const Icon(
+    //           Icons.arrow_back_ios_outlined,
+    //           color: Colors.black,
+    //         ),
+    //         onPressed: (() {
+    //           Navigator.pop(context);
+    //         }),
+    //       ),
+    //       backgroundColor: Colors.white,
+    //       elevation: 0,
+    //       title: const Center(
+    //         child: Text(
+    //           "Detail",
+    //           textAlign: TextAlign.center,
+    //           style: TextStyle(
+    //               fontSize: 17,
+    //               fontWeight: FontWeight.w500,
+    //               color: Colors.black),
+    //         ),
+    //       )),
+    // );
   }
 }
