@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:movie_app/core/data/movies_data.dart';
+import 'package:movie_app/core/data/data.dart';
 import 'package:movie_app/core/models/movies.dart';
 import 'package:movie_app/core/pages/detail_page.dart';
 
@@ -30,6 +30,7 @@ class ListMoviesHome extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => DetailMovie(
                               movie: moviesList[index],
+                              index: index,
                             )));
               },
               child: Container(
@@ -44,8 +45,8 @@ class ListMoviesHome extends StatelessWidget {
                     child: Image.network(
                       listMovie[index].poster,
                       fit: BoxFit.cover,
-                      loadingBuilder:
-                          ((context, child, ImageChunkEvent? loadingProgress) {
+                      loadingBuilder: ((context, child,
+                          ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Center(
                           child: CircularProgressIndicator(

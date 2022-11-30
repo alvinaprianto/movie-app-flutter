@@ -1,11 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:movie_app/core/models/movies.dart';
 
 class DetailMovie extends StatefulWidget {
-  const DetailMovie({super.key, required this.movie});
+  const DetailMovie({super.key, required this.movie, required this.index});
 
   final Movies movie;
+  final int index;
 
   @override
   State<DetailMovie> createState() => _DetailMovieState();
@@ -127,26 +130,38 @@ class _DetailMovieState extends State<DetailMovie> {
                 }).toList(),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 14),
-                child: GridView(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
-                    children: _actors.entries.map(
-                      (e) {
+                  padding: const EdgeInsets.only(top: 14),
+                  child: GridView(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                      children: widget.movie.actors.map((e) {
                         return Column(
                           children: [
                             CircleAvatar(
                               radius: 50,
-                              child: Image.asset(e.key),
+                              child: Image.asset(e.img),
                             ),
                             const SizedBox(width: 0.0, height: 8),
-                            Text(e.value.toString())
+                            Text(e.name)
                           ],
                         );
-                      },
-                    ).toList()),
-              ),
+                      }).toList())
+                  // _actors.entries.map(
+                  //   (e) {
+                  //     return Column(
+                  //       children: [
+                  //         CircleAvatar(
+                  //           radius: 50,
+                  //           child: Image.asset(e.key),
+                  //         ),
+                  //         const SizedBox(width: 0.0, height: 8),
+                  //         Text(e.value.toString())
+                  //       ],
+                  //     );
+                  //   },
+                  // ).toList()),
+                  ),
             ]),
           ),
         ],
@@ -194,9 +209,10 @@ class _DetailMovieState extends State<DetailMovie> {
                       Container(
                         padding: const EdgeInsets.only(bottom: 60),
                         width: double.infinity,
-                        child: Image.asset(
-                          "images/banner_spiderman2.png",
-                          fit: BoxFit.contain,
+                        height: MediaQuery.of(context).size.height / 2.2,
+                        child: Image.network(
+                          widget.movie.poster,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       Positioned(
@@ -208,9 +224,12 @@ class _DetailMovieState extends State<DetailMovie> {
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12)),
-                                child: Image.network(
-                                  widget.movie.poster,
-                                  height: 110,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network(
+                                    widget.movie.poster,
+                                    height: 120,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 10, height: 0.0),
@@ -221,13 +240,45 @@ class _DetailMovieState extends State<DetailMovie> {
                                   maxLines: 2,
                                   overflow: TextOverflow.clip,
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black),
                                 ),
                               ),
                             ],
+                          )),
+                      Positioned(
+                          bottom: 80,
+                          right: 0,
+                          child: Container(
+                            height: 40,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.7),
+                                borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(20),
+                                    topLeft: Radius.circular(20))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                const ImageIcon(
+                                    Svg(
+                                      "images/star_icon.svg",
+                                    ),
+                                    size: 20,
+                                    color: Color(0xFFFF8700)),
+                                const SizedBox(width: 8, height: 0.0),
+                                Text(
+                                  widget.movie.rating.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFFFF8700)),
+                                ),
+                              ],
+                            ),
                           ))
                     ],
                   ),
@@ -243,57 +294,57 @@ class _DetailMovieState extends State<DetailMovie> {
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const <Widget>[
-                          ImageIcon(
+                        children: <Widget>[
+                          const ImageIcon(
                             Svg("images/genre_icon.svg"),
                             color: Colors.grey,
                             size: 20,
                           ),
-                          SizedBox(width: 4, height: 0.0),
+                          const SizedBox(width: 4, height: 0.0),
                           Text(
-                            "Action",
+                            widget.movie.genre,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: VerticalDivider(
                               thickness: 1,
                               color: Colors.grey,
                             ),
                           ),
-                          ImageIcon(
+                          const ImageIcon(
                             Svg("images/duration_icon.svg"),
                             color: Colors.grey,
                             size: 20,
                           ),
-                          SizedBox(width: 4, height: 0.0),
+                          const SizedBox(width: 4, height: 0.0),
                           Text(
-                            "2021",
+                            widget.movie.year,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: VerticalDivider(
                               thickness: 1,
                               color: Colors.grey,
                             ),
                           ),
-                          ImageIcon(
+                          const ImageIcon(
                             Svg("images/duration_movie.svg"),
                             color: Colors.grey,
                             size: 20,
                           ),
-                          SizedBox(width: 4, height: 0.0),
+                          const SizedBox(width: 4, height: 0.0),
                           Text(
-                            "148 minutes",
+                            widget.movie.duration,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:movie_app/core/data/movies_data.dart';
+import 'package:movie_app/core/data/data.dart';
 
 import '../widgets/carousel_custom.dart';
 import '../widgets/list_movies_home.dart';

@@ -42,6 +42,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   intl: ^0.17.0
+  textfield_search: ^0.10.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
