@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:movie_app/core/models/movies.dart';
 
 class DetailMovie extends StatefulWidget {
-  const DetailMovie({super.key});
+  const DetailMovie({super.key, required this.movie});
+
+  final Movies movie;
 
   @override
   State<DetailMovie> createState() => _DetailMovieState();
@@ -205,16 +208,16 @@ class _DetailMovieState extends State<DetailMovie> {
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12)),
-                                child: Image.asset(
-                                  "images/poster_spiderman2.png",
+                                child: Image.network(
+                                  widget.movie.poster,
                                   height: 110,
                                 ),
                               ),
                               const SizedBox(width: 10, height: 0.0),
                               Container(
                                 width: MediaQuery.of(context).size.width - 180,
-                                child: const Text(
-                                  "Spiderman No Way Home",
+                                child: Text(
+                                  widget.movie.title,
                                   maxLines: 2,
                                   overflow: TextOverflow.clip,
                                   textAlign: TextAlign.left,

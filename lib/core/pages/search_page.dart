@@ -72,10 +72,10 @@ class _SearchPageState extends State<SearchPage> {
                 itemBuilder: ((context, index) {
                   return GestureDetector(
                     onTap: (() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => DetailMovie())));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: ((context) => DetailMovie())));
                     }),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
