@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movie_app/core/pages/login_page.dart';
 import 'package:movie_app/core/pages/main_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,8 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 5), () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: ((context) => MainPage())));
+      FirebaseAuth.instance.currentUser != null
+          ? Navigator.push(
+              context, MaterialPageRoute(builder: ((context) => MainPage())))
+          : Navigator.push(
+              context, MaterialPageRoute(builder: ((context) => LoginPage())));
     });
   }
 

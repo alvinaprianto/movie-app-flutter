@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:movie_app/core/pages/favorite_page.dart';
 import 'package:movie_app/core/pages/home_page.dart';
+import 'package:movie_app/core/pages/profile_page.dart';
 import 'package:movie_app/core/pages/search_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -19,7 +20,8 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _widgetOption = const [
     HomePage(),
     SearchPage(),
-    FavoritePage()
+    FavoritePage(),
+    ProfilePage()
   ];
 
   @override
@@ -43,6 +45,7 @@ class _MainPageState extends State<MainPage> {
                 Svg('images/nav_save.svg'),
               ),
               label: 'Favorite'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: (value) {
